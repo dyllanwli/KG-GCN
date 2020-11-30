@@ -9,8 +9,13 @@ from pandas import json_normalize
 import rdflib
 import networkx as nx
 
+# spacy
+import spacy
+from spacy.matcher import Matcher 
+from spacy.tokens import Span 
+from spacy.pipeline import TextCategorizer
+
 import matplotlib.pyplot as plt
-%matplotlib inline
 
 import opennre
 
@@ -32,6 +37,7 @@ class OPENREKG:
             self.sentences_extend.extend(s)
 
     def get_relation_opennre(self):
+        print("Getting relation using opennre")
 
     
     def ner_spacy(self, s):
@@ -49,6 +55,8 @@ class OPENREKG:
 
 def main():
     print("starting")
+    openkg = OPENREKG()
+    openkg.get_extended_sentence()
 
 if __name__ == "__main__":
     main()

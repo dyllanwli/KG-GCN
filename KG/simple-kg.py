@@ -10,7 +10,7 @@ import rdflib
 import networkx as nx
 
 import matplotlib.pyplot as plt
-%matplotlib inline
+# %matplotlib inline
 
 # spacy
 import spacy
