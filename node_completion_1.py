@@ -24,7 +24,8 @@ def run(args, seed):
     node_num = features.size()[0]
     class_num = labels.numpy().max() + 1
 
-    g = dgl.DGLGraph()
+    g = dgl.DGLGraph().to('cuda:%s' % args['cuda'] )
+    print(g.device)
     g.add_nodes(node_num)
     adj = adj.tocoo()
     g.add_edges(adj.row, adj.col)
@@ -88,14 +89,15 @@ def run(args, seed):
 
 def parser_loader():
     parser = argparse.ArgumentParser(description='Self-Supervised GCN')
-    parser.add_argument('--dataset', type=str, default='citeseer')
+    parser.add_argument('--dataset', type=str, default='cora')
     parser.add_argument('--embedding-dim', nargs='+', type=int, default=[1433,16,7])
     parser.add_argument('--lr', type=float, default=0.008)
     parser.add_argument('--weight-decay', type=float, default=8e-5)
     parser.add_argument('--reduced-dimension', type=int, default=32)
     parser.add_argument('--loss-weight', type=float, default=0.5)
     parser.add_argument('--grid-search', type=bool, default=False)
-    parser.add_argument('--net', type=str, default='gin') # gat
+    parser.add_argument('--net', type=str, default='gin') # gat, gin
+    parser.add_argument('--cuda', type=str, default='0') # gat, gin
     return parser
 
 # python main_gingat_comp.py --dataset cora --embedding-dim 1433 16 7 --lr 0.008 --weight-decay 8e-5 --reduced-dimension 24 --loss-weight 0.5 --net gat
@@ -110,6 +112,13 @@ def setup_seed(seed):
     random.seed(seed)
 
 if __name__ == "__main__":
+    if torch.cuda.is_available():
+        # check cuda availibity in case the cuda() function for tensor obejct cannot find cuda
+        pass
+    else:
+        print("cuda not available")
+        exit()
+    # check cuda
 
     wandb.init(project="ssgcn")
 
