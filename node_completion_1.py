@@ -100,8 +100,8 @@ def parser_loader():
     parser.add_argument('--cuda', type=str, default='0') # gat, gin
     return parser
 
-# python main_gingat_comp.py --dataset cora --embedding-dim 1433 16 7 --lr 0.008 --weight-decay 8e-5 --reduced-dimension 24 --loss-weight 0.5 --net gat
-# python main_gingat_comp.py --dataset cora --embedding-dim 1433 16 7 --lr 0.008 --weight-decay 8e-5 --reduced-dimension 36 --loss-weight 0.3 --net gin
+# python node_completion_1.py --dataset pubmed --embedding-dim 500 16 3 --lr 0.01 --weight-decay 5e-4 --reduced-dimension 24 --loss-weight 0.3 --net gat
+# python node_completion_1.py --dataset pubmed --embedding-dim 500 16 3 --lr 0.01 --weight-decay 5e-4 --reduced-dimension 24 --loss-weight 0.3 --net gin
 
 
 def setup_seed(seed):
