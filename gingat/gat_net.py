@@ -9,8 +9,8 @@ import dgl
     Graph Attention Networks (Veličković et al., ICLR 2018)
     https://arxiv.org/abs/1710.10903
 """
-from gnns.gat_layer import GATLayer
-from gnns.mlp_readout_layer import MLPReadout
+from .gat_layer import GATLayer
+from .mlp_readout_layer import MLPReadout
 
 class GATNet(nn.Module):
 

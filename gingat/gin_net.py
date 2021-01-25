@@ -11,7 +11,7 @@ from dgl.nn.pytorch.glob import SumPooling, AvgPooling, MaxPooling
     https://arxiv.org/pdf/1810.00826.pdf
 """
 
-from gnns.gin_layer import GINLayer, ApplyNodeFunc, MLP
+from .gin_layer import GINLayer, ApplyNodeFunc, MLP
 
 class GINNet(nn.Module):
     
