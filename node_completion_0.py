@@ -6,18 +6,16 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-import net as net
 from utils import load_data, load_adj_raw, normalize_adj, sparse_mx_to_torch_sparse_tensor
 from sklearn.metrics import f1_score
 
-import dgl
-from gnn.net import net as net
+# import dgl
+from gcn.net import net_gcn, net_gcn_multitask
 
 import wandb
 
 
 def run(args, seed):
-    wandb.init(project="ssgcn")
     setup_seed(seed)
     adj, features, labels, idx_train, idx_val, idx_test = load_data(args['dataset'])
 
@@ -104,17 +102,20 @@ def setup_seed(seed):
 
 if __name__ == "__main__":
 
+    wandb.init(project="ssgcn")
     # os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
     parser = parser_loader()
     args = vars(parser.parse_args(""))
-    print(args)
+    print("args", args)
 
     if not args['grid_search']:
 
         acc_val = np.zeros(50)
         acc_test = np.zeros(50)
         for seed in range(50):
+            # run code
+            print("starting")
             acc_val[seed], acc_test[seed] = run(args, seed)
             print('seed', seed, 'val', acc_val[seed], 'test', acc_test[seed])
 

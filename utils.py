@@ -44,14 +44,14 @@ def load_data(dataset_str):
     names = ['x', 'y', 'tx', 'ty', 'allx', 'ally', 'graph']
     objects = []
     for i in range(len(names)):
-        with open("../dataset/ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
+        with open("./dataset/ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
             if sys.version_info > (3, 0):
                 objects.append(pkl.load(f, encoding='latin1'))
             else:
                 objects.append(pkl.load(f))
 
     x, y, tx, ty, allx, ally, graph = tuple(objects)
-    test_idx_reorder = parse_index_file("../dataset/ind.{}.test.index".format(dataset_str))
+    test_idx_reorder = parse_index_file("./dataset/ind.{}.test.index".format(dataset_str))
     test_idx_range = np.sort(test_idx_reorder)
 
     if dataset_str == 'citeseer':
@@ -147,7 +147,7 @@ def construct_feed_dict(features, support, labels, labels_mask, placeholders):
 
 def chebyshev_polynomials(adj, k):
     """Calculate Chebyshev polynomials up to order k. Return a list of sparse matrices (tuple representation)."""
-    print("Calculating Chebyshev polynomials up to order {}...".format(k))
+    print("Calculating Chebyshev polynomials up to order {}..".format(k))
 
     adj_normalized = normalize_adj(adj)
     laplacian = sp.eye(adj.shape[0]) - adj_normalized
@@ -159,7 +159,7 @@ def chebyshev_polynomials(adj, k):
     t_k.append(scaled_laplacian)
 
     def chebyshev_recurrence(t_k_minus_one, t_k_minus_two, scaled_lap):
-        s_lap = sp.csr_matrix(scaled_lap, copy=True)
+        s_lap = sp.lil_matrix(scaled_lap, copy=True)
         return 2 * s_lap.dot(t_k_minus_one) - t_k_minus_two
 
     for i in range(2, k+1):
@@ -183,14 +183,14 @@ def load_adj_raw(dataset_str):
     names = ['x', 'y', 'tx', 'ty', 'allx', 'ally', 'graph']
     objects = []
     for i in range(len(names)):
-        with open("../dataset/ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
+        with open("./dataset/ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
             if sys.version_info > (3, 0):
                 objects.append(pkl.load(f, encoding='latin1'))
             else:
                 objects.append(pkl.load(f))
 
     x, y, tx, ty, allx, ally, graph = tuple(objects)
-    test_idx_reorder = parse_index_file("../dataset/ind.{}.test.index".format(dataset_str))
+    test_idx_reorder = parse_index_file("./dataset/ind.{}.test.index".format(dataset_str))
     test_idx_range = np.sort(test_idx_reorder)
 
     if dataset_str == 'citeseer':
